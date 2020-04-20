@@ -1,0 +1,385 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>[JS]callback和promise · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="本地存储.html" />
+    
+    
+    <link rel="prev" href="原型继承.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="./">
+            
+                <a href="./">
+            
+                    
+                    简介
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="https.html">
+            
+                <a href="https.html">
+            
+                    
+                    [HTML]https的原理及特点
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="跨域.html">
+            
+                <a href="跨域.html">
+            
+                    
+                    [JS]跨域
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="闭包.html">
+            
+                <a href="闭包.html">
+            
+                    
+                    [JS]闭包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="this（全局域、函数域、对象域）.html">
+            
+                <a href="this（全局域、函数域、对象域）.html">
+            
+                    
+                    [JS]关于this
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="原型继承.html">
+            
+                <a href="原型继承.html">
+            
+                    
+                    [JS]原型继承
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.7" data-path="callback和promise.html">
+            
+                <a href="callback和promise.html">
+            
+                    
+                    [JS]callback和promise
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" data-path="本地存储.html">
+            
+                <a href="本地存储.html">
+            
+                    
+                    [HTML]本地存储
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="." >[JS]callback和promise</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="callback-&#x548C;-promise">callback &#x548C; promise</h1>
+<h2 id="&#x5F02;&#x6B65;callback">&#x5F02;&#x6B65;callback</h2>
+<p>&#x56DE;&#x8C03;&#x51FD;&#x6570;&#xFF1A;&#x7C7B;&#x578B;&#x4E3A;function&#x7684;&#x51FD;&#x6570;&#x53C2;&#x6570;&#xFF0C;callback&#x5E38;&#x7528;&#x4E8E;&#x5F02;&#x6B65;&#x65B9;&#x6CD5;&#x7684;&#x56DE;&#x8C03;&#xFF0C;&#x4E5F;&#x6709;&#x7684;&#x7528;&#x4E8E;&#x540C;&#x6B65;&#x65B9;&#x6CD5;&#xFF0C;&#x4F8B;&#x5982;&#x6570;&#x7EC4;&#x4E2D;&#x7684;<code>forEach</code>&#x65B9;&#x6CD5;&#xFF1A;</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">var</span> arr = [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]
+arr.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">val</span>)</span>{
+    <span class="hljs-built_in">console</span>.log(val)
+})
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;finish&apos;</span>)
+
+<span class="hljs-comment">// 1,2,3,finish</span>
+</code></pre>
+<p>&#x8FD8;&#x6709;&#x6570;&#x7EC4;&#x7684;<code>map</code>&#x3001;<code>filter</code>&#x3001;<code>reduce</code>&#x65B9;&#x6CD5;</p>
+<p>&#x5E38;&#x89C1;&#x7684;&#x5F02;&#x6B65;callback&#x50CF;<code>setTimeout</code>&#x4E2D;&#x7684;&#x56DE;&#x8C03;&#xFF1A;</p>
+<pre><code class="lang-javascript">setTimeout(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>)</span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;aaa&apos;</span>)
+},<span class="hljs-number">1000</span>)
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;bbb&apos;</span>)
+
+<span class="hljs-comment">// aaa , bbb</span>
+</code></pre>
+<h4 id="&#x56DE;&#x8C03;&#x5730;&#x72F1;&#xFF08;callback-hell&#xFF09;">&#x56DE;&#x8C03;&#x5730;&#x72F1;&#xFF08;callback hell&#xFF09;</h4>
+<p>callback hell&#xFF1A;&#x4E0B;&#x4E00;&#x6B65;&#x7684;&#x64CD;&#x4F5C;&#x4F9D;&#x8D56;&#x4E8E;&#x4E0A;&#x4E00;&#x6B65;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x4E0A;&#x4E00;&#x6B65;&#x7684;&#x64CD;&#x4F5C;&#x53C8;&#x4F9D;&#x8D56;&#x4E8E;&#x4E0A;&#x4E0A;&#x6B65;&#x7684;&#x7ED3;&#x679C;&#xFF1B;&#x5C42;&#x5C42;callback&#x5D4C;&#x5957;</p>
+<pre><code class="lang-javascript">one(param,<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">result1</span>)</span>{
+    two(result1,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result2</span>)</span>{
+        three(result2,<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">result3</span>)</span>{
+            done(result3)
+        })
+    })
+})
+</code></pre>
+<h2 id="promise">Promise</h2>
+<p>Promise &#x8BD1;&#x4E3A;&#x627F;&#x8BFA;&#xFF0C;&#x4EE3;&#x8868;&#x5F53;&#x524D;&#x6CA1;&#x6709;&#x5B9E;&#x73B0;&#xFF0C;&#x4F46;&#x5728;&#x672A;&#x6765;&#x7684;&#x67D0;&#x4E2A;&#x65F6;&#x95F4;&#x70B9;&#x4F1A;&#xFF08;&#x4E5F;&#x53EF;&#x80FD;&#x4E0D;&#x4F1A;&#xFF09;&#x5B9E;&#x73B0;&#x7684;&#x4E00;&#x4EF6;&#x4E8B;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x6211;&#x627F;&#x8BFA;&#xFF08;Promise&#xFF09;&#x5728;&#x534A;&#x5C0F;&#x65F6;&#x5199;&#x5B8C;&#x4F5C;&#x4E1A;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x5207;&#x987A;&#x5229;&#xFF0C;&#x534A;&#x5C0F;&#x65F6;&#x540E;&#x63D0;&#x4EA4;&#x4E86;&#xFF0C;&#x4EE3;&#x8868;&#x8FD9;&#x4E2A;<code>promise</code>&#x5B9E;&#x73B0;&#x4E86;&#xFF08;<code>fullfilled</code>&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x4E2D;&#x95F4;&#x51FA;&#x4E86;&#x4EC0;&#x4E48;&#x95EE;&#x9898;&#xFF0C;&#x534A;&#x5C0F;&#x65F6;&#x4E4B;&#x540E;&#x6CA1;&#x6709;&#x987A;&#x5229;&#x63D0;&#x4EA4;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;<code>promise</code>&#x5931;&#x8D25;&#x4E86;&#xFF08;<code>rejected</code>&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">const</span> task = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">resolve, reject</span>)</span>{
+    me.write(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">timeSpent</span>)</span>{
+        <span class="hljs-keyword">if</span>(timeSpent &lt;= <span class="hljs-number">30</span>){
+            resolve()
+        }<span class="hljs-keyword">else</span>{
+            reject()
+        }
+    })
+})
+</code></pre>
+<h4 id="&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#xFF08;promise-chaining&#xFF09;">&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#xFF08;promise chaining&#xFF09;</h4>
+<p>&#x5C06;&#x4E00;&#x4E32;&#x7684;callback&#x51FD;&#x6570;&#x7528;Promise&#x5B9E;&#x73B0;&#xFF0C;&#x7136;&#x540E;&#x94FE;&#x5F0F;&#x8C03;&#x7528;&#xFF1A;</p>
+<pre><code class="lang-javascript">one(param)
+.then((result1)=&gt;{<span class="hljs-keyword">return</span> two(result1)})
+.then((result2)=&gt;{<span class="hljs-keyword">return</span> three(result2)})
+.then((result3)=&gt;{<span class="hljs-keyword">return</span> done(result3)})
+.catch(err=&gt;handleError(err))
+</code></pre>
+<h4 id="asyncawait">Async/Await</h4>
+<p>&#x53EF;&#x4EE5;&#x7528;<code>async/await</code>&#x8F6C;&#x5316;&#x6210;&#x66F4;&#x63A5;&#x8FD1;&#x540C;&#x6B65;&#x8C03;&#x7528;&#x7684;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<pre><code class="lang-javascript"><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">main</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword">try</span>{
+        <span class="hljs-keyword">var</span> result1 = <span class="hljs-keyword">await</span> one(param)
+        <span class="hljs-keyword">var</span> result2 = <span class="hljs-keyword">await</span> two(result1)
+        <span class="hljs-keyword">var</span> result3 = <span class="hljs-keyword">await</span> three(result2)
+        done(result3)
+    }<span class="hljs-keyword">catch</span>(err){
+        handleError(err)
+    }
+}
+
+main()
+</code></pre>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="原型继承.html" class="navigation navigation-prev " aria-label="Previous page: [JS]原型继承">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="本地存储.html" class="navigation navigation-next " aria-label="Next page: [HTML]本地存储">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"[JS]callback和promise","level":"1.7","depth":1,"next":{"title":"[HTML]本地存储","level":"1.8","depth":1,"path":"本地存储.md","ref":"本地存储.md","articles":[]},"previous":{"title":"[JS]原型继承","level":"1.6","depth":1,"path":"原型继承.md","ref":"原型继承.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":[],"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"callback和promise.md","mtime":"2020-04-20T14:13:24.147Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-20T14:14:08.676Z"},"basePath":".","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="gitbook/gitbook.js"></script>
+    <script src="gitbook/theme.js"></script>
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
